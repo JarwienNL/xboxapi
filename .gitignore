@@ -275,4 +275,6 @@ appsettings.*.json
 !appsettings.json
 
 # Claude Code directory
-.claude/
+.claude/config.json
+XboxApi/config.json
+config.json

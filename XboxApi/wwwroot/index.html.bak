@@ -38,13 +38,9 @@
                     <h2>⚙️ Cover Art Settings</h2>
                     <div class="config-section">
                         <div class="form-group">
-                            <label for="igdbClientId">IGDB Client ID:</label>
-                            <input type="text" id="igdbClientId" placeholder="Enter IGDB Client ID">
-                            <small>Gratis via <a href="https://dev.twitch.tv/console/apps" target="_blank">Twitch Developer Console</a></small>
-                        </div>
-                        <div class="form-group">
-                            <label for="igdbClientSecret">IGDB Client Secret:</label>
-                            <input type="password" id="igdbClientSecret" placeholder="Enter IGDB Client Secret">
+                            <label for="giantBombApiKey">Giant Bomb API Key (optional):</label>
+                            <input type="text" id="giantBombApiKey" placeholder="Enter API key for game cover art">
+                            <small>Get your free API key from <a href="https://www.giantbomb.com/api/" target="_blank">Giant Bomb API</a></small>
                         </div>
                         <div class="form-group">
                             <button class="btn btn-primary" onclick="saveConfig()" style="margin-bottom: 10px;">💾 Save Settings</button>
@@ -498,8 +494,8 @@
                 const data = await response.json();
                 
                 if (data.success && data.data) {
-                    document.getElementById('igdbClientId').value = data.data.igdbClientId || '';
-                    document.getElementById('igdbClientSecret').value = data.data.igdbClientSecret || '';
+                    const apiKey = data.data.giantBombApiKey || '';
+                    document.getElementById('giantBombApiKey').value = apiKey;
                     
                     const statusElement = document.getElementById('coverArtStatus');
                     if (data.data.enableCoverArt) {
@@ -517,8 +513,7 @@
 
         async function saveConfig() {
             try {
-                const clientId = document.getElementById('igdbClientId').value.trim();
-                const clientSecret = document.getElementById('igdbClientSecret').value.trim();
+                const apiKey = document.getElementById('giantBombApiKey').value.trim();
                 const messageElement = document.getElementById('configMessage');
                 
                 messageElement.innerHTML = '<div class="loading">Saving configuration...</div>';
@@ -529,8 +524,7 @@
                         'Content-Type': 'application/json'
                     },
                     body: JSON.stringify({
-                        igdbClientId: clientId || null,
-                        igdbClientSecret: clientSecret || null
+                        giantBombApiKey: apiKey || null
                     })
                 });
                 

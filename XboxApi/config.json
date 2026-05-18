@@ -1,4 +1,5 @@
 {
-  "GiantBombApiKey": "",
-  "EnableCoverArt": false
+  "IgdbClientId": "bg6u3qnt1fh0z40jwkhhige77n2aqs",
+  "IgdbClientSecret": "x4q8p36vkq41wavs8td1188mllbmlx",
+  "EnableCoverArt": true
 }

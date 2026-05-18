@@ -1,6 +1,6 @@
 namespace XboxApi.Models;
-
 public class ConfigUpdateRequest
 {
-    public string? GiantBombApiKey { get; set; }
+    public string? IgdbClientId { get; set; }
+    public string? IgdbClientSecret { get; set; }
 }
