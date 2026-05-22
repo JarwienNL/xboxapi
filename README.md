@@ -188,9 +188,7 @@ The Xbox API includes a built-in web interface for easy management:
 - **Token Management**: Monitor token expiration and refresh status
 
 ### Cover Art Configuration
-1. Get a free API key from [Giant Bomb API](https://www.giantbomb.com/api/)
-2. Enter the API key in the "Cover Art Settings" section
-3. Save the configuration to enable game cover art in Home Assistant
+1. IGDB...
 
 ### User Status Indicators
 - **🟢 Green**: User authenticated and tokens valid
@@ -243,7 +241,7 @@ Logs are written to:
    ```
 
 6. **Cover art not working**:
-   - Verify Giant Bomb API key is valid and saved
+   - Verify IGDB API key is valid and saved
    - Check that "Enable Cover Art" is turned on
    - Some games may not have cover art available
 
