@@ -154,6 +154,7 @@ public class UserInGame
 {
     public string Username { get; set; } = string.Empty;
     public string Gamertag { get; set; } = string.Empty;
+    public string? ProfilePicUrl { get; set; }
 }
 
 public class UserStatusResponse

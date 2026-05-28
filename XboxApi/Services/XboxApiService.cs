@@ -47,7 +47,7 @@ public class XboxApiService : IXboxApiService
             async (authHeader) =>
             {
                 var request = new HttpRequestMessage(HttpMethod.Get,
-                    "https://profile.xboxlive.com/users/me/profile/settings?settings=Gamertag,Gamerscore,AccountTier,TenureLevel,XboxOneRep,PreferredColor,RealName,Bio,Location,ModernGamertag,ModernGamertagSuffix,UniqueModernGamertag");
+                    "https://profile.xboxlive.com/users/me/profile/settings?settings=Gamertag,Gamerscore,AccountTier,TenureLevel,XboxOneRep,PreferredColor,RealName,Bio,Location,ModernGamertag,ModernGamertagSuffix,UniqueModernGamertag,GameDisplayPicRaw");
                 
                 request.Headers.Add("Authorization", authHeader);
                 request.Headers.Add("x-xbl-contract-version", "3");
@@ -205,8 +205,19 @@ public class XboxApiService : IXboxApiService
             {
                 var gamertag = await _authService.GetStoredGamertagAsync(username) ?? username;
                 var presence = await GetPresenceAsync(username);
-
-                return FindActiveGame(username, gamertag, presence);
+                var activeGame = FindActiveGame(username, gamertag, presence);
+                if (activeGame != null)
+                {
+                    try
+                    {
+                        var profile = await GetProfileAsync(username);
+                        var picSetting = profile.ProfileUsers.FirstOrDefault()?.Settings.FirstOrDefault(s => s.Id == "GameDisplayPicRaw");
+                        if (picSetting != null)
+                            activeGame.ProfilePicUrl = picSetting.Value?.ToString();
+                    }
+                    catch { }
+                }
+                return activeGame;
             }
             catch (Exception ex)
             {
@@ -238,7 +249,8 @@ public class XboxApiService : IXboxApiService
             response.Users = activeUsers.Select(u => new UserInGame
             {
                 Username = u!.Username,
-                Gamertag = u.Gamertag
+                Gamertag = u.Gamertag,
+                ProfilePicUrl = u.ProfilePicUrl
             }).ToList();
 
             // Get cover art if enabled
@@ -417,5 +429,6 @@ public class XboxApiService : IXboxApiService
         public string GameName { get; init; } = string.Empty;
         public string? DeviceType { get; init; }
         public string? RichPresence { get; init; }
+        public string? ProfilePicUrl { get; set; }
     }
 }

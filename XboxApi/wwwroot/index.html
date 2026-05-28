@@ -263,7 +263,12 @@
                                 <div class="players-grid">
                                     ${users.map(user => `
                                         <div class="player-card">
-                                            <div class="player-icon">👤</div>
+                                            <div class="player-icon">
+                                                ${user.profilePicUrl ? 
+                                                    `<img src="${user.profilePicUrl}" alt="${user.gamertag}" style="width:48px;height:48px;border-radius:50%;object-fit:cover;border:2px solid #107C10;">` : 
+                                                    '👤'
+                                                }
+                                            </div>
                                             <div class="player-info">
                                                 <div class="player-gamertag">${user.gamertag}</div>
                                                 <div class="player-username">${user.username}</div>
